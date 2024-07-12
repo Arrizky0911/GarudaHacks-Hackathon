@@ -1,27 +1,29 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import './App.css'
+import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import { Appwrite } from 'appwrite';// appwrite import statement 
-import config from './config';
+import appwriteConfig from './appwrite';// import statement 
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import PrivateRoutes from "./utils/PrivateRoutes";
+import { AuthProvider } from "./utils/useAuth";
+import Login from "../src/components";
+import Signup from "../src/components";
+import ProtectedRoute from "./utils/ProtectedRoute";
 
+//Initializing Appwrite 
 const appwrite = new Appwrite();
-appwrite.setEndpoint(config.endpoint).setProject(config.project);
+appwrite.setEndpoint(appwriteConfig.endpoint).setProject(appwriteConfig.project);
 
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 
-const App = () => {
+function App() {
   return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </>
+    
   );
-};
+}
 
 export default App;
