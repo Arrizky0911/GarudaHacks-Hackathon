@@ -1,22 +1,30 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import Signup from "./components/Signup";
 import Login from "./components/Login";
-import "./App.css";
-import Home from "./components/Home";
-import Navbar from "./components/Navbar";
+import Register from "./components/Register";
+import FilePicker from "./components/FilePicker";
+import PrivateRoutes from "./utils/PrivateRoutes";
+import { AuthProvider } from "./utils/AuthContext";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-const App = () => {
+
+function App() {
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
+      
+      <Router>
+        <AuthProvider>
+          <Routes>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/register" element={<Register/>}/>
+            {/* <Route path="/" element={<Home/>}/> */}
+            <Route element={<PrivateRoutes/>}>
+              <Route path="/upload" element={<FilePicker/>}/>
+            </Route>
+          </Routes>
+          </AuthProvider>
+      </Router>
     </>
   );
-};
+}
 
 export default App;

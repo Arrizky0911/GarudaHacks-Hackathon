@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import React, { useEffect, useRef } from "react";
 import {
   Box,
@@ -11,19 +9,27 @@ import {
   Typography,
 } from "@mui/material";
 import GoogleIcon from "../assets/icons8-google-48.png";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../utils/AuthContext";
 
-const Login = () => {
-  const [user, setUser] = useState({});
+function Login() {
+  const navigate = useNavigate();
+  const { user, loginUser } = useAuth();
 
-  const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
+  const loginForm = useRef(null)
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(user)
-  };
-  
+  useEffect(() => {
+    if (user) navigate("/upload");
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const email = loginForm.current.email.value
+    const password = loginForm.current.password.value
+    const userInfo = {email, password}
+    loginUser(userInfo)
+  }
+
   return (
     <div style={{ backgroundColor: "#252525", minHeight: "100vh", margin: 0 }}>
       <Container
@@ -72,10 +78,11 @@ const Login = () => {
             account.
           </Typography>
           <Grid container spacing={2} justifyContent="center">
+              <form ref={loginForm} onSubmit={handleSubmit}>
             <Grid item xs={12} sx={{ marginX: "70px", marginTop: "78px" }}>
-              <TextField
+              <password
                 fullWidth
-                id="email"
+                id="password"
                 label="Email"
                 variant="outlined"
                 size="small"
@@ -230,11 +237,12 @@ const Login = () => {
                 />
               </Button>
             </Grid>
+            </form>
           </Grid>
         </Box>
       </Container>
     </div>
   );
-};
+}
 
 export default Login;

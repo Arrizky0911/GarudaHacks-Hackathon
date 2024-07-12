@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import React from "react";
 import {
   Box,
@@ -11,20 +9,9 @@ import {
   Typography,
 } from "@mui/material";
 import GoogleIcon from "../assets/icons8-google-48.png";
+import { Link } from "react-router-dom";
 
-
-const Signup = () => {
-  const [user, setUser] = useState({});
-
-  const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(user)
-  };
-  
+function Register() {
   return (
     <div style={{ backgroundColor: "#252525", height: "100vh", margin: 0 }}>
       <Container
@@ -286,6 +273,6 @@ const Signup = () => {
       </Container>
     </div>
   );
-};
+}
 
-export default Signup;
+export default Register;

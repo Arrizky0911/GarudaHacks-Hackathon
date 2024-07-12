@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'CustomFont';
+  src: url('/font/helvetica.woff2') format('woff2'),
+       url('/font/helvetica.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #252525;
+  font-family: 'Helvetica', sans-serif;
+}
