@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Typography, IconButton } from "@mui/material";
+import { Box, Button, Typography, IconButton, TextField } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { styled } from "@mui/system";
@@ -18,11 +18,11 @@ const Container = styled(Box)(({ theme }) => ({
   },
 }));
 
-const UploadBox = styled(Box)(({ theme }) => ({
+const UploadBox = styled(Box)(({ theme, uploaded }) => ({
   border: "2px dashed #fff",
   borderRadius: "8px",
   width: "950px",
-  height: "444px",
+  height: uploaded ? "300px" : "444px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -74,21 +74,33 @@ const SelectFileButton = styled(Button)(({ theme }) => ({
 }));
 
 const descriptions = {
-  LPDP: "LPDP (Lembaga Pengelola Dana Pendidikan) adalah program beasiswa dari Kementerian Keuangan RI yang mendukung studi magister (S2) dan doktoral (S3) di dalam dan luar negeri. Fokusnya pada bidang-bidang strategis untuk pembangunan nasional.",
-  "Beasiswa Indonesia Maju":
-    "Beasiswa Indonesia Maju adalah program dari Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi RI untuk siswa berprestasi yang ingin melanjutkan pendidikan di jenjang yang lebih tinggi, baik di dalam maupun luar negeri. Beasiswa ini mencakup biaya pendidikan dan biaya hidup.",
-  "Beasiswa Unggulan":
-    "Beasiswa Unggulan adalah program beasiswa dari Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi RI untuk mahasiswa berprestasi di tingkat S1, S2, dan S3. Program ini mendukung berbagai bidang studi dengan tujuan mencetak lulusan unggul dan berdaya saing tinggi.",
+  "Kontribusi Essay":
+    "Kontribusi Essay adalah esai yang menjelaskan kontribusi Anda terhadap pembangunan nasional dan bagaimana beasiswa ini akan membantu mencapai tujuan tersebut.",
+  "Study Plan Essay":
+    "Study Plan Essay adalah esai yang merencanakan program studi Anda di masa depan, baik di dalam maupun luar negeri, serta bagaimana ini berkaitan dengan pembangunan pendidikan nasional.",
+  "Personal Statement":
+    "Personal Statement adalah pernyataan pribadi yang menjelaskan latar belakang, pencapaian, dan tujuan karir Anda yang relevan dengan pendidikan dan pengembangan sumber daya manusia di Indonesia.",
 };
 
 const FilePicker = () => {
   const [activeButton, setActiveButton] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [description, setDescription] = useState("");
+  const [fileContent, setFileContent] = useState("");
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    setUploadedFile(file);
+    if (file && (file.type === "application/msword" || file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
+      setUploadedFile(file);
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setFileContent(e.target.result);
+      };
+      reader.readAsText(file);
+    } else {
+      alert("Please select a valid Word document file (.doc or .docx)");
+    }
   };
 
   const handleButtonClick = (button) => {
@@ -101,28 +113,28 @@ const FilePicker = () => {
       <Box display="flex" justifyContent="space-between" width="950px">
         <CustomButton
           variant="outlined"
-          active={activeButton === "LPDP"}
-          onClick={() => handleButtonClick("LPDP")}
+          active={activeButton === "Kontribusi Essay"}
+          onClick={() => handleButtonClick("Kontribusi Essay")}
         >
-          LPDP
+          Kontribusi Essay
         </CustomButton>
         <CustomButton
           variant="outlined"
-          active={activeButton === "Beasiswa Indonesia Maju"}
-          onClick={() => handleButtonClick("Beasiswa Indonesia Maju")}
+          active={activeButton === "Study Plan Essay"}
+          onClick={() => handleButtonClick("Study Plan Essay")}
         >
-          Beasiswa Indonesia Maju
+          Study Plan Essay
         </CustomButton>
         <CustomButton
           variant="outlined"
-          active={activeButton === "Beasiswa Unggulan"}
-          onClick={() => handleButtonClick("Beasiswa Unggulan")}
+          active={activeButton === "Personal Statement"}
+          onClick={() => handleButtonClick("Personal Statement")}
         >
-          Beasiswa Unggulan
+          Personal Statement
         </CustomButton>
       </Box>
 
-      <UploadBox>
+      <UploadBox uploaded={!!uploadedFile}>
         {uploadedFile ? (
           <>
             <InsertDriveFileIcon style={{ fontSize: "4rem", color: "#fff" }} />
@@ -134,7 +146,7 @@ const FilePicker = () => {
         ) : (
           <>
             <input
-              accept="application/pdf,application/msword"
+              accept=".doc,.docx"
               style={{ display: "none" }}
               id="file-upload"
               type="file"
@@ -150,10 +162,10 @@ const FilePicker = () => {
               </IconButton>
             </label>
             <Typography variant="h6">
-              Select a file or drag and drop here
+              Select a Word document file (.doc/.docx) or drag and drop here
             </Typography>
             <Typography variant="body2">
-              PDF or Docs file size no more than 1500 words.
+              File size should not exceed 1500 words.
             </Typography>
             <SelectFileButton variant="contained" component="span">
               Select File
@@ -162,13 +174,44 @@ const FilePicker = () => {
         )}
       </UploadBox>
 
+      {uploadedFile && (
+        <TextField
+          multiline
+          rows={10}
+          variant="outlined"
+          fullWidth
+          value={fileContent}
+          InputProps={{
+            readOnly: true,
+          }}
+          sx={{
+            marginTop: "16px",
+            width: "950px",
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
+            color: "#000",
+            border: "1px solid #000",
+            borderRadius: '10px'
+          }}
+        />
+      )}
+
       <Description variant="body2">
         {description
           ? description
           : "Description here. Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, delectus vitae nesciunt maiore provident inventore molestiae at rem sunt architecto."}
-        {activeButton === "LPDP" && (
+        {activeButton === "Kontribusi Essay" && (
           <a href="#" style={{ color: "#4d90fe" }}>
-            Learn more about LPDP
+            Learn more about Kontribusi Essay
+          </a>
+        )}
+        {activeButton === "Study Plan Essay" && (
+          <a href="#" style={{ color: "#4d90fe" }}>
+            Learn more about Study Plan Essay
+          </a>
+        )}
+        {activeButton === "Personal Statement" && (
+          <a href="#" style={{ color: "#4d90fe" }}>
+            Learn more about Personal Statement
           </a>
         )}
       </Description>
