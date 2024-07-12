@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import GoogleIcon from "../assets/icons8-google-48.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
 
 function Login() {
@@ -49,7 +49,7 @@ function Login() {
             height: "844px",
             borderRadius: "16px",
             boxShadow: "0px -1px 5px rgba(255, 255, 255, 0.5)",
-            padding: "50px 76px 70px 76px",
+            padding: "50px 76px 120px 76px",
           }}
         >
           <Typography
@@ -78,7 +78,7 @@ function Login() {
           >
             We are excited to have you back. Log in now and access your account.
           </Typography>
-          <form ref={loginForm} onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} ref={loginForm}> 
             <Grid container spacing={2} justifyContent="center">
               <Grid item xs={12} sx={{ marginX: "70px", marginTop: "78px" }}>
                 <TextField
