@@ -1,51 +1,33 @@
-import React from "react";
+import React, { useRef } from "react";
+// import { Link } from "react-router-dom";
+import { ID } from "appwrite";
+import { account } from "../appwrite";
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
+const Login = () => {
+  const loginForm = useRef(null);
 
-const login = () => {
-  const [user, setUser] = useState({});
-
-  const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(user)
+
+    const name = loginForm.current.name.value;
+    const email = loginForm.current.email.value;
+    const password1 = loginForm.current.password1.value;
+
+    try {
+      const response = await account.createEmailSession(email, password1);
+      console.log("User has been Logged In:", response);
+      // Redirect or perform further actions upon successful registration
+    } catch (error) {
+      console.error("Login failed:", error);
+      // Handle registration errors appropriately
+    }
   };
-  
+
   return (
-    <div className="container">
-      <h1 className="heading">Log In Form</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-control">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email Address"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-control">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-            onChange={handleChange}
-          />
-        </div>
-        <button className="submit-btn">Log In</button>
+      <form ref={loginForm} onSubmit={handleLogin}>
+        
       </form>
-      <p className="account">
-        Don't have an account yet? <Link to="/signup">Sign up</Link>.
-      </p>
-    </div>
   );
 };
 
-export default login;
+export default Login;
