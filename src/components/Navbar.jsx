@@ -18,11 +18,6 @@ const Navbar = () => {
             Signup
           </Link>
         </li>
-        <li className="nav-item">
-          <Link to="/profile" className="nav-link">
-            Profile
-          </Link>
-        </li>
       </ul>
     </nav>
   );

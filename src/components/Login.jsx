@@ -1,5 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
+import GoogleIcon from "../assets/icons8-google-48.png";
 
 const Login = () => {
   const [user, setUser] = useState({});
@@ -14,34 +25,214 @@ const Login = () => {
   };
   
   return (
-    <div className="container">
-      <h1 className="heading">Log In Form</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-control">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email Address"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-control">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-            onChange={handleChange}
-          />
-        </div>
-        <button className="submit-btn">Log In</button>
-      </form>
-      <p className="account">
-        Don't have an account yet? <Link to="/signup">Sign up</Link>.
-      </p>
+    <div style={{ backgroundColor: "#252525", minHeight: "100vh", margin: 0 }}>
+      <Container
+        sx={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Box
+          sx={{
+            bgcolor: "#1B1B23",
+            width: "701px",
+            height: "844px",
+            borderRadius: "16px",
+            boxShadow: "0px -1px 5px rgba(255, 255, 255, 0.5)",
+            padding: "50px 76px 70px 76px",
+          }}
+        >
+          <Typography
+            variant="h1"
+            align="center"
+            gutterBottom
+            sx={{
+              fontSize: "40px",
+              fontWeight: "bold",
+              color: "#ffffff",
+              marginTop: "70px",
+            }}
+          >
+            Welcome Back, Essaier!
+          </Typography>
+          <Typography
+            variant="body1"
+            align="center"
+            paddingX={"92px"}
+            paddingTop={"70px"}
+            sx={{
+              fontSize: 20,
+              fontWeight: "regular",
+              color: "rgba(255, 255, 255, 0.7)",
+            }}
+          >
+            We are excited to have your back. Log in now and access your
+            account.
+          </Typography>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} sx={{ marginX: "70px", marginTop: "78px" }}>
+              <TextField
+                fullWidth
+                id="email"
+                label="Email"
+                variant="outlined"
+                size="small"
+                type="email"
+                marginX={"70px"}
+                sx={{
+                  "& .MuiInputLabel-root": {
+                    color: "#FFFFFF",
+                  },
+                  "& .MuiInputBase-input": {
+                    color: "#FFFFFF",
+                    padding: "22px",
+                  },
+                  "& .MuiInputBase-input::placeholder": {
+                    color: "#FFFFFF",
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "8px",
+                  },
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ABABAB",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ABABAB",
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ABABAB",
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sx={{ marginX: "70px", marginTop: "10px" }}>
+              <TextField
+                fullWidth
+                id="password"
+                label="Password"
+                variant="outlined"
+                size="small"
+                type="password"
+                sx={{
+                  "& .MuiInputLabel-root": {
+                    color: "#FFFFFF", // Warna label putih
+                  },
+                  "& .MuiInputBase-input": {
+                    color: "#FFFFFF", // Warna teks input putih
+                    padding: "22px", // Padding untuk input field
+                  },
+                  "& .MuiInputBase-input::placeholder": {
+                    color: "#FFFFFF", // Warna placeholder putih
+                    padding: "22px", // Padding untuk placeholder
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "8px", // Rounded border radius 4px
+                  },
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#4D4D4D", // Warna border
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ABABAB", // Warna border saat hover
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ABABAB", // Warna border saat focus
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              align="center"
+              sx={{ marginTop: "24px", marginBottom: "56px" }}
+            >
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: "18px",
+                  color: "rgba(255, 255, 255, 0.7)",
+                  manrginY: "16px",
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "#FFFFFF",
+                  },
+                }}
+                onClick={() => alert("Redirect to forgot")}
+              >
+                Forgot your password?
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} sx={{ marginX: "70px" }}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                sx={{
+                  height: "56px",
+                  backgroundColor: "#0058FF",
+                  color: "#FFFFFF",
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                  paddingY: "21.5px",
+                  paddingX: "237.5px",
+                  "&:hover": {
+                    backgroundColor: "#0049C6",
+                  },
+                }}
+              >
+                Log In
+              </Button>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              align="center"
+              sx={{ marginX: "70px", marginY: "16px" }}
+            >
+              <Box display="flex" alignItems="center">
+                <Divider sx={{ flexGrow: 1, backgroundColor: "#FFFFFF" }} />
+                <Typography
+                  sx={{
+                    fontSize: "18px",
+                    color: "rgba(255, 255, 255, 0.7)",
+                    paddingX: "10px",
+                  }}
+                >
+                  or
+                </Typography>
+                <Divider sx={{ flexGrow: 1, backgroundColor: "#FFFFFF" }} />
+              </Box>
+            </Grid>
+            <Grid item xs={12} sx={{ marginX: "70px" }}>
+              <Button
+                fullWidth
+                variant="outlined"
+                sx={{
+                  color: "#000000",
+                  borderColor: "#ABABAB",
+                  paddingY: "21.5px",
+                  paddingX: "237.5px",
+                  "&:hover": {
+                    borderColor: "#0058FF",
+                    backgroundColor: "rgba(0,0,0, 0.04)",
+                  },
+                }}
+              >
+                <img
+                  src={GoogleIcon}
+                  alt="Google Icon"
+                  width="24"
+                  height="24"
+                />
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
     </div>
   );
 };
