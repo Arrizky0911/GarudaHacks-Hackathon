@@ -1,4 +1,5 @@
 import React from "react";
+import Header from "./components/Header";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import FilePicker from "./components/FilePicker";
@@ -10,19 +11,19 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 function App() {
   return (
     <>
-      
-      <Router>
-        <AuthProvider>
+      <AuthProvider>
+        <Router>
+          <Header />
           <Routes>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/register" element={<Register/>}/>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             {/* <Route path="/" element={<Home/>}/> */}
-            <Route element={<PrivateRoutes/>}>
-              <Route path="/upload" element={<FilePicker/>}/>
+            <Route element={<PrivateRoutes />}>
+              <Route path="/upload" element={<FilePicker />} />
             </Route>
           </Routes>
-          </AuthProvider>
-      </Router>
+        </Router>
+      </AuthProvider>
     </>
   );
 }
